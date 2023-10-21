@@ -2,6 +2,7 @@
 #include <cstdio>
 #include <vector>
 #include <iostream>
+#include <string>
 #include <algorithm>
 using namespace std;
 
@@ -15,6 +16,7 @@ int main() {
     cin.ignore();
     string srcProgram = "";
     int index = 0;
+    int closingIndex = 0;
     for (int i = 0; i < N; i++) {
         cout << "\ti: " << i << endl;
         string tagLine;
@@ -25,10 +27,24 @@ int main() {
         do 
         {
             getline(cin, tagLine);
+            cout << "\tINDEX: " << index << endl; // debug
             // checks to make sure tag is correctly formatted
             if (tagLine[1] == '/') 
-            {
-
+            {   
+                // cout << "\tCLOSING INDEX: " << closingIndex << endl; // debug
+                // cout << "\tFIND CLOSING INDEX: " << tagLine.find(to_string(closingIndex)) << endl; // debug
+                if (index = 0) 
+                {
+                    cout << "Please enter an opening tag first." << endl;
+                    valid = false;
+                }
+                else if (tagLine.find(to_string(closingIndex)) == string::npos) 
+                {
+                    cout << "Tags must be closed in reverse order of addition. EX. tag1 must be preceded by tag2." << endl;
+                    valid = false;
+                }
+                closingIndex--;
+                valid = true;
             } 
             else 
             {
@@ -47,10 +63,13 @@ int main() {
                     srcProgram = srcProgram + tagLine;
                     // cout << "\tsrcProgram After Add: " << srcProgram << endl; // debug
                     index++;
+                    closingIndex++;
                     valid = true;
                 }
             }
         } while (!valid);
+
+        cout << "\tCURRENT INDEX: " << index << endl; // debug
     }
 
 
